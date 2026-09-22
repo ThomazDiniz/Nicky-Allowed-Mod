@@ -1,0 +1,35 @@
+# Locally downloaded modding tools (both spellings).
+/tools_to_mod/
+/tool_to_mod/
+
+# Generated mod packages and release artifacts.
+/dist/
+/releases/
+
+# Editor state, local game paths, extracted parameters and recovery copies.
+/.dsms/
+/project.json
+/Mod engine sekiro.txt
+/param/
+/recovery/
+
+# Keep work scripts, but exclude extracted assets, previews and generated data.
+/work/**
+!/work/**/
+!/work/**/*.ps1
+!/work/**/*.py
+/work/backups/
+
+# Temporary files and editor backups.
+*.bak
+*.bak.*
+*.tmp
+*.temp
+*.log
+*.dmp
+~$*
+__pycache__/
+*.py[cod]
+Thumbs.db
+Desktop.ini
+.DS_Store
