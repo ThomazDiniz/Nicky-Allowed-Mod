@@ -1,5 +1,7 @@
 # Centipede particles replaced with splashes — alpha 0.1.4
 
+**September 22 correction:** The earlier renderer-field substitution and integer-only audit missed the first floating-point texture property, which still referenced centipede atlas s04092. Alpha 0.1.8 addresses those fifteen properties using the same splash donor. See [the follow-up report](SENPOU-VOMIT-ALPHA-0.1.8.md). Historical gameplay confirmations below apply only to the encounters actually tested.
+
 September 21, 2026. After confirming the static Senpou floor fix, the user requested blood-like particles instead of the component deletion followed by the 0.1.1 crash.
 
 **User result:** the substitution worked and did not crash in the tested encounter. This does not automatically validate every attack, variant or the True Monk.

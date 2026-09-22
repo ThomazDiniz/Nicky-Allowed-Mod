@@ -1,5 +1,7 @@
 # Remaining reference audit — September 21, 2026
 
+**September 22 correction:** The earlier renderer-field substitution and integer-only audit missed the first floating-point texture property, which still referenced centipede atlas s04092. Alpha 0.1.8 addresses those fifteen properties using the same splash donor. See [the follow-up report](SENPOU-VOMIT-ALPHA-0.1.8.md). Historical gameplay confirmations below apply only to the encounters actually tested.
+
 **Result: no additional confirmed target under the references searched.** This does not rule out centipedes with other names or in content that has not been visually inspected.
 
 The user first confirmed that the alpha 0.1.4 particle substitution worked without a crash in the tested encounter. This does not validate every attack or the True Monk.

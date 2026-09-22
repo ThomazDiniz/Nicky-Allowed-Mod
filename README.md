@@ -6,9 +6,9 @@ The mod hides selected centipede models and environmental layers, and replaces i
 
 ## Current release
 
-**Invisible alpha 0.1.7** contains 29 mod files, including the versioned title-menu label. The complete release was packaged and verified locally.
+**Invisible alpha 0.1.8** contains 29 mod files, including the versioned title-menu label. The complete release was packaged and verified locally.
 
-The local distribution is `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.7.zip`, with a matching `.zip.sha256` checksum. Release binaries are ignored by Git and must be distributed separately.
+The local distribution is `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.8.zip`, with a matching `.zip.sha256` checksum. Release binaries are ignored by Git and must be distributed separately.
 
 The ZIP contains the complete `mods/` folder, `VERSION`, English `README.md`, `CHANGES-AND-TESTS.md` and `FILES-SHA256.csv`.
 
@@ -36,7 +36,7 @@ Some layers contain other insects alongside centipedes, so this alpha also remov
 4. Extract the release ZIP and copy its `mods` folder into the game directory, beside `sekiro.exe`. Accept replacement of this mod's older files when upgrading. The resulting folders are `Sekiro/mods/chr`, `obj`, `map`, and `sfx`; do not create `Sekiro/mods/mods`.
 5. Launch the game normally through Steam. You do not need to run Yabber, FLVER Editor or DSMapStudio to use the mod.
 
-If your loader uses a different override directory, copy the contents of `mods` there instead. Mods that replace the same files require a compatible merge; copying one over another does not combine their changes. Alpha 0.1.7 is a complete package, so earlier versions are not required.
+If your loader uses a different override directory, copy the contents of `mods` there instead. Mods that replace the same files require a compatible merge; copying one over another does not combine their changes. Alpha 0.1.8 is a complete package, so earlier versions are not required.
 
 ## Project layout and development
 

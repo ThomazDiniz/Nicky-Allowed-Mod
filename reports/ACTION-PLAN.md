@@ -4,11 +4,11 @@ Updated September 22, 2026. This English edition consolidates the earlier chrono
 
 ## Current status
 
-**Current release: alpha 0.1.7, September 22.** The user confirmed the title-menu label worked. The complete 29-file release now includes `Nicky Allowed - Invisible Centipedes | alpha 0.1.7`, generated from VERSION. Installed with Sekiro closed, backup and all 29 hashes verified. The user accepted the version-only addition without another gameplay test. See [the menu report](TITLE-MENU-LABEL.md) and [versioning workflow](RELEASE-WORKFLOW.md).
+**Current release: alpha 0.1.8, September 22.** The remaining s04092 texture properties in fifteen particle renderers were replaced with the existing splash donor s11606. This addresses a concrete remaining centipede texture reference in the monk effect chain after the reported vomit appearance. See [the correction report](SENPOU-VOMIT-ALPHA-0.1.8.md).
 
-**Previous alpha 0.1.6 installation:** completed September 21 at 15:36 with Sekiro closed. All 28 hashes matched; those mod files remain unchanged in 0.1.7. Backup: `work/backups/before-alpha-016-install-20260921-153628/`; record: `work/alpha-016-installation.json`.
+The complete 29-file release is installed with Sekiro closed and all installed hashes verified. Three effect packages and the menu version label changed from 0.1.7; the other 25 payload files are identical. Backup: `work/backups/before-alpha-018-20260922-185749/`. Installation record: `work/alpha-0.1.8-installation.json`. The new texture correction has not yet been tested in gameplay.
 
-Current distribution: `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.7.zip`, with English instructions, VERSION and a SHA-256 manifest. Only the latest release is retained. Current installation record: `work/alpha-0.1.7-installation.json`. Hanbei's separate C1013 parasite was freshly confirmed hidden in both the release and installation; see [the audit](HANBEI-FINAL-QUEST.md).
+Current distribution: `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.8.zip`, with English instructions, VERSION and a SHA-256 manifest. Only the latest release is retained. The title-menu label reads `Nicky Allowed - Invisible Centipedes | alpha 0.1.8`. Hanbei's separate C1013 parasite remains hidden; see [the audit](HANBEI-FINAL-QUEST.md).
 
 - [x] Complete the selected model, object, scenery and particle edits.
 - [x] Preserve Long-arm Centipede/C1030/C1040.
@@ -17,6 +17,7 @@ Current distribution: `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.7.z
 - [x] Record user confirmation of animated and static Senpou floor removals at the observed location.
 - [x] Record user confirmation that the splash particle substitution worked without a crash in the tested encounter.
 - [ ] Test the latest Dungeon bodies and separate Senpou 502001 layer in game.
+- [ ] Confirm the alpha 0.1.8 particle texture correction during monk vomit and grab attacks.
 - [ ] Test remaining attacks, phases, finishing sequences, distance variants and shadows as saves allow.
 - [ ] Develop the separate model-replacement variant after the invisible version.
 
