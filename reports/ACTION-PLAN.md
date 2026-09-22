@@ -4,11 +4,11 @@ Updated September 22, 2026. This English edition consolidates the earlier chrono
 
 ## Current status
 
-**Additional menu test, September 22:** installed an independent title-menu label reading `Nicky Allowed - Invisible Centipedes`, with backup record and hash verification. Its intended location is the upper-left corner. In-game appearance remains pending; this add-on is not yet in the alpha 0.1.6 release ZIP. See [the menu-label report](TITLE-MENU-LABEL.md).
+**Current release: alpha 0.1.7, September 22.** The user confirmed the title-menu label worked. The complete 29-file release now includes `Nicky Allowed - Invisible Centipedes | alpha 0.1.7`, generated from VERSION. Installed with Sekiro closed, backup and all 29 hashes verified. The user accepted the version-only addition without another gameplay test. See [the menu report](TITLE-MENU-LABEL.md) and [versioning workflow](RELEASE-WORKFLOW.md).
 
-**Invisible alpha 0.1.6 is packaged and installed.** Installation was explicitly requested and completed on September 21 at 15:36 with Sekiro closed. All 28 installed files matched the release manifest. Backup: `work/backups/before-alpha-016-install-20260921-153628/`; record: `work/alpha-016-installation.json`.
+**Previous alpha 0.1.6 installation:** completed September 21 at 15:36 with Sekiro closed. All 28 hashes matched; those mod files remain unchanged in 0.1.7. Backup: `work/backups/before-alpha-016-install-20260921-153628/`; record: `work/alpha-016-installation.json`.
 
-Current distribution: `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.6.zip`, with English instructions and a SHA-256 manifest. Earlier releases were removed on September 22 to save space. The documentation update does not change mod binaries or require reinstallation.
+Current distribution: `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.7.zip`, with English instructions, VERSION and a SHA-256 manifest. Only the latest release is retained. Current installation record: `work/alpha-0.1.7-installation.json`. Hanbei's separate C1013 parasite was freshly confirmed hidden in both the release and installation; see [the audit](HANBEI-FINAL-QUEST.md).
 
 - [x] Complete the selected model, object, scenery and particle edits.
 - [x] Preserve Long-arm Centipede/C1030/C1040.

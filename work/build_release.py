@@ -151,6 +151,8 @@ def main():
     # Copy only after verification; recursive cleanup is handled by the PowerShell wrapper.
     shutil.copytree(staging, target)
     shutil.copy2(temporary_zip, archive_path)
+    menu['Output'] = str(target / 'mods/menu/05_000_title.gfx')
+    (ROOT / 'work/title-menu/validation.json').write_text(json.dumps(menu, indent=2), encoding='utf-8')
     archive_hash = sha(archive_path)
     Path(str(archive_path) + '.sha256').write_text(f'{archive_hash}  {archive_path.name}\n', encoding='ascii')
     (ROOT / 'VERSION').write_text(target_version + '\n', encoding='ascii')

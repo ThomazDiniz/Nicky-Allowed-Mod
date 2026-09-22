@@ -6,11 +6,11 @@ The mod hides selected centipede models and environmental layers, and replaces i
 
 ## Current release
 
-**Invisible alpha 0.1.6** contains 28 mod packages and was installed and verified locally on September 21, 2026.
+**Invisible alpha 0.1.7** contains 29 mod files, including the versioned title-menu label. The complete release was packaged and verified locally.
 
-The local distribution is `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.6.zip`, with a matching `.zip.sha256` checksum. Only this latest release is retained locally. Release binaries are ignored by Git and must be distributed separately; cloning the repository does not provide a ready-to-install mod.
+The local distribution is `releases/Nicky-Allowed-Invisible-Centipedes-alpha-0.1.7.zip`, with a matching `.zip.sha256` checksum. Release binaries are ignored by Git and must be distributed separately.
 
-The ZIP contains the complete `mods/` folder, English installation instructions (`README.md`), `CHANGES-AND-TESTS.md`, and `FILES-SHA256.csv`, which lists every mod file and its checksum.
+The ZIP contains the complete `mods/` folder, `VERSION`, English `README.md`, `CHANGES-AND-TESTS.md` and `FILES-SHA256.csv`.
 
 ## Coverage
 
@@ -36,9 +36,11 @@ Some layers contain other insects alongside centipedes, so this alpha also remov
 4. Extract the release ZIP and copy its `mods` folder into the game directory, beside `sekiro.exe`. Accept replacement of this mod's older files when upgrading. The resulting folders are `Sekiro/mods/chr`, `obj`, `map`, and `sfx`; do not create `Sekiro/mods/mods`.
 5. Launch the game normally through Steam. You do not need to run Yabber, FLVER Editor or DSMapStudio to use the mod.
 
-If your loader uses a different override directory, copy the contents of `mods` there instead. Mods that replace the same files require a compatible merge; copying one over another does not combine their changes. Alpha 0.1.6 is a complete package, so earlier versions are not required.
+If your loader uses a different override directory, copy the contents of `mods` there instead. Mods that replace the same files require a compatible merge; copying one over another does not combine their changes. Alpha 0.1.7 is a complete package, so earlier versions are not required.
 
 ## Project layout and development
+
+The root `VERSION` file is the version source. To build the next complete release, run `./release.ps1 -Bump patch` in PowerShell; it updates the menu version, ZIP, manifest and release documentation together. `-Preview` shows the next number without changes. See [the release workflow](reports/RELEASE-WORKFLOW.md) for explicit versions, reviewed overlays and publishing instructions. Release templates live in `docs/release/`; the build does not install or publish automatically.
 
 | Path | Purpose |
 | --- | --- |
@@ -56,7 +58,9 @@ Model changes hide selected faces while preserving the remaining model data. Pac
 
 ## Investigation records
 
-- [Title-menu label test](reports/TITLE-MENU-LABEL.md)
+- [Title-menu label and user confirmation](reports/TITLE-MENU-LABEL.md)
+- [Hanbei final-quest model check](reports/HANBEI-FINAL-QUEST.md)
+- [Versioning and publishing](reports/RELEASE-WORKFLOW.md)
 - [Action plan and current status](reports/ACTION-PLAN.md)
 - [Reference coverage audit](reports/REFERENCE-AUDIT-2026-09-21.md)
 - [Particle substitution and user validation](reports/BLOOD-PARTICLES-ALPHA-0.1.4.md)

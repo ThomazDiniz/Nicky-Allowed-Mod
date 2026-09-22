@@ -2,6 +2,8 @@
 
 Requested text: **Nicky Allowed - Invisible Centipedes**.
 
+**Current outcome:** the user confirmed that the label worked. Alpha 0.1.7 includes it in the complete release and appends ` | alpha 0.1.7`, generated from the central VERSION file. The user accepted the version-only text change without another gameplay test. Versioned menu installation was completed with Sekiro closed and all 29 release-file hashes matching. The earlier test record below is historical.
+
 **Installed for testing** on September 22, 2026 at 10:11 with Sekiro closed. The installed hash matched the validated build. No prior menu override existed. Rollback record: `work/backups/before-title-label-20260922-101105/manifest.json`; installation record: `work/title-menu/installation.json`. In-game appearance is still pending user confirmation.
 
 Prepared an independent override of `menu/05_000_title.gfx`, adding one read-only, non-selectable text field in the original `MenuFont_01` font. Intended position: upper-left, 64/50 px on the 1920x1080 menu stage; 24 px warm-white text. It is an unnamed placement without a game text-variable binding.
@@ -19,7 +21,7 @@ No combat, character, scenery, FXR or texture package changes are part of this t
 - Install with backup/hash checks: `work/title-menu/install.ps1`.
 - Installation result, when run: `work/title-menu/installation.json`.
 
-The game was not running during preparation. In-game rendering remains unverified: check the initial prompt, main-menu options and entry into gameplay. Font resolution and runtime behavior cannot be established by structural checks alone.
+The game was not running during preparation. The initial note requested an appearance check; the user subsequently confirmed success. The version suffix was structurally verified using the same field and placement. No new gameplay test is required by the user for that text-only change.
 
 ## Original textures, available for manual editing
 
