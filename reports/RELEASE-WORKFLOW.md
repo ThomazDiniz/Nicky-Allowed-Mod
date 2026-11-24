@@ -57,3 +57,43 @@ On Nexus Mods, use the Sekiro game section, version `0.1.7`, and identify the up
 On GitHub, commit the authored source/docs while retaining `.gitignore`. Attach the ZIP and optional `.zip.sha256` to a Release tagged `v0.1.7-alpha`, marked as a pre-release. Do not force-add `releases/`, `tools_to_mod/`, extracted game files or backups into Git history. GitHub's automatically generated source archive is not the playable mod. [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases) support binary assets; this approximately 93 MB ZIP is below the 2 GiB per-file limit.
 
 The checksum is a text record of the ZIP's SHA-256 hash, useful for checking download integrity. It is not an installation file. This workflow prepares local artifacts and does not publish to either service.
+
+## Variant selection
+
+The current playable release is invisible alpha 0.1.8. `variants/profiles.json` defines the two build profiles. Default commands still select `invisible`.
+
+```powershell
+# Read-only plans; the replacement profile reports Ready=False until production.
+.\release.ps1 -Variant invisible -Bump patch -Preview
+.\release.ps1 -Variant replacement -Preview
+
+# Future production, after validated replacement models are available:
+.\release.ps1 -Variant invisible -Bump patch
+.\release.ps1 -Variant replacement -Overlay .\dist\replacement-reviewed
+```
+
+The second build uses the same central version as the first. Replacement builds always start from the latest complete invisible release, then apply the complete reviewed replacement overlay. This carries shared particle/scenery fixes forward; all replacement packages must be included each time. Whole-file overlays require merging new shared changes into any overlapping replacement binder before review.
+
+Each profile has separate archive names, menu labels and documentation templates. Cleanup only removes older releases of the profile being built, preserving the latest release of the other variant. Building does not install or publish. If a build fails, retain and inspect its staging files; do not publish a partial pair.
+
+The replacement profile intentionally fails before staging while `ready` is false. Completing production requires updating `variants/replacement-plan.json`, replacing the draft release notes in `docs/release/replacement/`, reviewing models and then setting readiness. Readiness is a declaration of completed review, not an automatic model conversion.
+
+The explicit replacement overlay must contain `mods/` and `replacement-validation.json`. The review must exactly cover all overlay files and bind them to their SHA-256 values:
+
+```json
+{
+  "Variant": "replacement",
+  "Result": "PASS",
+  "Files": [
+    {
+      "File": "mods/chr/c1013.chrbnd.dcx",
+      "SHA256": "ACTUAL_SHA256_AFTER_REVIEW",
+      "VisualReplacementVerified": true
+    }
+  ]
+}
+```
+
+Do not create this record until the visual replacement has actually been inspected. A hash check cannot determine whether a model looks correct. The build rejects empty overlays, stale hashes, incomplete review coverage and the protected Long-arm character packages. The review record is build input and is not included in the playable ZIP.
+
+Both variants use the same destination filenames. Choose one complete package, not both. Replacing an individual archive does not merge variants. See [the production plan](REPLACEMENT-VARIANT-PLAN.md) for model work and community follow-ups.

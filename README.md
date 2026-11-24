@@ -75,3 +75,9 @@ Older reports document historical states and may refer to releases or artifacts 
 Built using [FLVER Editor](https://github.com/asasasasasbc/FLVER_Editor), SoulsFormats, [Yabber](https://github.com/JKAnderson/Yabber), and [DSMapStudio](https://github.com/soulsmods/DSMapStudio). Loaded through [Sekiro Mod Engine](https://github.com/katalash/ModEngine).
 
 Original game assets belong to their respective rights holders. This is an unofficial fan project.
+
+## Planned replacement variant
+
+The project supports separate `invisible` and `replacement` build profiles. Invisible alpha 0.1.8 is the current playable version. The replacement profile is prepared but cannot generate a release until actual substitute models are reviewed. Both variants will be complete alternative packages with distinct menu labels; install only one at a time.
+
+See [the replacement production plan](reports/REPLACEMENT-VARIANT-PLAN.md) for community suggestions and [the build workflow](reports/RELEASE-WORKFLOW.md#variant-selection) for commands. Existing scenery removals and blood substitutions are shared initially. Long-arm Centipede remains preserved.

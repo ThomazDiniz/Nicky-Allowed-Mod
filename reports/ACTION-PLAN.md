@@ -198,3 +198,13 @@ The user requested two independent alternatives: first the invisible mod, then a
 - Final review: `work/review-user-mesh-changes.json`, `work/m13-corpses/validation.json`, `work/senpou-502001-final/validation.json`, `work/alpha-016-release-validation.json` and `work/alpha-016-installation.json`.
 - Early C5100 installed SHA-256: `D48EC818D3F578E79312C01F4C3328C077B9CCAC5E42148F5629C3C911676779`.
 - Historical intermediate paths include `dist/nicky-allowed-invisible-v02/`, `dist/pending-m13-206500/`, `dist/pending-palacio/` and `work/verify-palacio/validation.json`. Path spellings are preserved as technical identifiers.
+
+## Replacement preparation — September 25, 2026
+
+- [x] Add separate invisible/replacement build profiles, archive names, menu labels and templates.
+- [x] Keep replacement packaging disabled until reviewed substitute assets exist.
+- [x] Record Reddit suggestions and Shichimen/Great Carp coverage follow-ups in [the production plan](REPLACEMENT-VARIANT-PLAN.md).
+- [ ] Select a replacement design and build the C1013 prototype.
+- [ ] Complete target-by-target rigging, validation and gameplay review before enabling replacement releases.
+
+This preparation does not change or reinstall alpha 0.1.8.

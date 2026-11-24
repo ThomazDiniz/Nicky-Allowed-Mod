@@ -32,11 +32,11 @@ def tag(code, payload):
     return struct.pack('<HI', code << 6 | 63, len(payload)) + payload
 
 
-def main(version=None, output=None, quiet=False):
+def main(version=None, output=None, quiet=False, display_name=None):
     version = version or (ROOT / 'VERSION').read_text(encoding='utf-8-sig').strip()
     if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)', version):
         raise ValueError('VERSION must contain a numeric major.minor.patch version')
-    label = f'{LABEL} | alpha {version}'
+    label = f'{display_name or LABEL} | alpha {version}'
     output = Path(output) if output else OUTPUT
     original = SOURCE.read_bytes()
     assert original[:4] == b'GFX\x0b', 'Unexpected source format/version'
@@ -93,8 +93,8 @@ def main(version=None, output=None, quiet=False):
                 'OriginalTagsUnchanged': len(old_tags), 'AddedTags': 2,
                 'CharacterId': character_id, 'Depth': depth,
                 'PositionPixels': [64, 50], 'FontPixels': 24,
-                'BaseLabelUserValidated': True, 'VersionSuffixGameTested': False,
-                'AdditionalUserTestRequired': False, 'Result': 'PASS'}
+                'BaseLabelUserValidated': display_name in (None, LABEL), 'VersionSuffixGameTested': False,
+                'AdditionalUserTestRequired': display_name not in (None, LABEL), 'Result': 'PASS'}
     (ROOT / 'work/title-menu/validation.json').write_text(json.dumps(evidence, indent=2), encoding='utf-8')
     if not quiet:
         print(json.dumps(evidence, indent=2))

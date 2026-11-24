@@ -45,14 +45,42 @@ def payload_path(folder, relative):
     return path
 
 
+def validate_replacement(overlay):
+    """Require a hash-bound review of every replacement package before packaging."""
+    if overlay is None:
+        raise ValueError('Replacement builds require an explicit reviewed overlay')
+    overlay = overlay.resolve()
+    review = json.loads((overlay / 'replacement-validation.json').read_text(encoding='utf-8'))
+    if review.get('Result') != 'PASS' or review.get('Variant') != 'replacement':
+        raise ValueError('Invalid replacement validation record')
+    rows = review.get('Files', [])
+    if not rows or len({row['File'] for row in rows}) != len(rows):
+        raise ValueError('Missing or duplicate replacement review entries')
+    files = {p.relative_to(overlay).as_posix() for p in (overlay / 'mods').rglob('*') if p.is_file()}
+    if files != {row['File'] for row in rows}:
+        raise ValueError('Replacement review must cover every overlay file exactly')
+    if not any(name.startswith(('mods/chr/', 'mods/obj/')) for name in files):
+        raise ValueError('Replacement overlay must contain a reviewed model package')
+    for row in rows:
+        path = payload_path(overlay, row['File'])
+        if path.name.lower() in {'c1030.chrbnd.dcx', 'c1040.chrbnd.dcx'}:
+            raise ValueError('Long-arm Centipede must remain preserved')
+        if sha(path) != row['SHA256'] or row.get('VisualReplacementVerified') is not True:
+            raise ValueError('Replacement hash or visual review is missing')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--bump', choices=['major', 'minor', 'patch'])
     group.add_argument('--version')
+    parser.add_argument('--variant', choices=['invisible', 'replacement'], default='invisible')
     parser.add_argument('--overlay', type=Path, help='Reviewed package directory containing mods/')
     parser.add_argument('--preview', action='store_true', help='Show next version without writing files')
     args = parser.parse_args()
+    profiles = json.loads((ROOT / 'variants/profiles.json').read_text(encoding='utf-8'))
+    profile = profiles[args.variant]
+    prefix = profile['prefix']
     current = (ROOT / 'VERSION').read_text(encoding='utf-8-sig').strip()
     version_tuple(current)
     target_version = args.version or (bump(current, args.bump) if args.bump else current)
@@ -60,21 +88,35 @@ def main():
         raise ValueError('Refusing to lower the central version')
     base_candidates = []
     for folder in RELEASES.iterdir():
-        match = re.fullmatch(re.escape(PREFIX) + '(' + VERSION_RE + ')', folder.name)
+        match = re.fullmatch(re.escape(prefix) + '(' + VERSION_RE + ')', folder.name)
         if folder.is_dir() and match:
             base_candidates.append((version_tuple(match[1]), folder))
+    # Replacements always start from the latest invisible payload, so shared fixes
+    # are not stranded in an older replacement release. The overlay is complete.
+    first_replacement = args.variant == 'replacement'
+    if first_replacement:
+        base_candidates = []
+        for folder in RELEASES.iterdir():
+            match = re.fullmatch(re.escape(PREFIX) + '(' + VERSION_RE + ')', folder.name)
+            if folder.is_dir() and match:
+                base_candidates.append((version_tuple(match[1]), folder))
     if not base_candidates:
         raise ValueError('A complete local base release is required; clone-only builds are not supported')
     base_version, base = max(base_candidates)
-    if version_tuple(target_version) <= base_version:
+    if version_tuple(target_version) < base_version or (version_tuple(target_version) == base_version and not first_replacement):
         raise ValueError('Target must be newer than the existing release; use -Bump patch')
-    target = RELEASES / (PREFIX + target_version)
+    target = RELEASES / (prefix + target_version)
     archive_path = target.with_name(target.name + '.zip')
     if any(path.exists() for path in [target, archive_path, Path(str(archive_path) + '.sha256')]):
         raise FileExistsError('Target release already exists; choose a new version')
     if args.preview:
-        print(json.dumps({'Current': current, 'Next': target_version, 'Base': str(base)}))
+        print(json.dumps({'Current': current, 'Next': target_version, 'Base': str(base), 'Variant': args.variant, 'Ready': profile['ready'], 'RequiresReviewedOverlay': args.variant == 'replacement'}))
         return
+
+    if not profile['ready']:
+        raise ValueError('Replacement production is not ready: complete variants/replacement-plan.json and validate replacement assets before enabling this profile')
+    if args.variant == 'replacement':
+        validate_replacement(args.overlay)
 
     with (base / 'FILES-SHA256.csv').open(encoding='utf-8-sig', newline='') as stream:
         old_rows = list(csv.DictReader(stream))
@@ -109,7 +151,7 @@ def main():
         dest = staging / relative
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, dest)
-    menu = build_menu(target_version, staging / 'mods/menu/05_000_title.gfx', quiet=True)
+    menu = build_menu(target_version, staging / 'mods/menu/05_000_title.gfx', quiet=True, display_name=profile['label'])
     rows = []
     for path in sorted((staging / 'mods').rglob('*')):
         if not path.is_file():
@@ -131,7 +173,7 @@ def main():
         writer.writerows(rows)
     (staging / 'VERSION').write_text(target_version + '\n', encoding='ascii')
     for name in ['README.md', 'CHANGES-AND-TESTS.md']:
-        text = (ROOT / 'docs/release' / name).read_text(encoding='utf-8')
+        text = (ROOT / profile['templates'] / name).read_text(encoding='utf-8')
         text = text.replace('{{VERSION}}', target_version).replace('{{PAYLOAD_COUNT}}', str(len(rows)))
         if re.search(r'\{\{[^}]+\}\}', text):
             raise ValueError('Unresolved release documentation placeholder')
@@ -163,13 +205,14 @@ def main():
     status += 'The ZIP contains the complete `mods/` folder, `VERSION`, English `README.md`, `CHANGES-AND-TESTS.md` and `FILES-SHA256.csv`.\n\n'
     text = re.sub(r'(?<=## Current release\n\n).*?(?=## Coverage)', lambda _: status, text, flags=re.S)
     text = re.sub(r'Alpha \d+\.\d+\.\d+ is a complete package', f'Alpha {target_version} is a complete package', text)
-    project_readme.write_text(text, encoding='utf-8')
-    evidence = {'Version': target_version, 'Release': str(target), 'Zip': str(archive_path),
+    if args.variant == 'invisible':
+        project_readme.write_text(text, encoding='utf-8')
+    evidence = {'Variant': args.variant, 'ReleasePrefix': prefix, 'Version': target_version, 'Release': str(target), 'Zip': str(archive_path),
                 'ZipSHA256': archive_hash, 'PayloadFiles': len(rows), 'AllZipHashesMatch': True,
                 'UnchangedBaseFiles': sum(row['SHA256'] == old_by_name.get(row['File'], {}).get('SHA256') for row in rows),
                 'BaseRelease': str(base), 'MenuLabel': menu['Label'], 'InstalledByBuild': False,
                 'Staging': str(staging), 'StagingZip': str(temporary_zip), 'Date': datetime.now(timezone.utc).isoformat()}
-    (ROOT / 'work' / f'alpha-{target_version}-release-validation.json').write_text(json.dumps(evidence, indent=2), encoding='utf-8')
+    (ROOT / 'work' / (f'alpha-{target_version}-release-validation.json' if args.variant == 'invisible' else f'replacement-alpha-{target_version}-release-validation.json')).write_text(json.dumps(evidence, indent=2), encoding='utf-8')
     print(json.dumps(evidence))
 
 

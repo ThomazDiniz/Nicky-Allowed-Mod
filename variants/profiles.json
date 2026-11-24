@@ -1,0 +1,14 @@
+{
+  "invisible": {
+    "prefix": "Nicky-Allowed-Invisible-Centipedes-alpha-",
+    "label": "Nicky Allowed - Invisible Centipedes",
+    "templates": "docs/release",
+    "ready": true
+  },
+  "replacement": {
+    "prefix": "Nicky-Allowed-Replaced-Centipedes-alpha-",
+    "label": "Nicky Allowed - Replaced Centipedes",
+    "templates": "docs/release/replacement",
+    "ready": false
+  }
+}

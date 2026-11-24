@@ -1,0 +1,41 @@
+{
+  "status": "planned",
+  "candidate": "Recommended after file inspection: a smooth low-poly tube with rounded end, solid color, no legs or arms; user selection pending",
+  "protectedCharacters": [
+    "c1030",
+    "c1040"
+  ],
+  "sharedPolicy": "Keep existing scenery removals and blood particle substitutions. Replace only individually reviewed parasite models.",
+  "targets": [
+    {
+      "id": "c1013",
+      "status": "pending",
+      "replacement": null
+    },
+    {
+      "id": "c5001",
+      "status": "pending",
+      "replacement": null
+    },
+    {
+      "id": "c1200",
+      "status": "pending",
+      "replacement": null
+    },
+    {
+      "id": "c1210",
+      "status": "pending",
+      "replacement": null
+    },
+    {
+      "id": "c5000",
+      "status": "pending",
+      "replacement": null
+    },
+    {
+      "id": "c5100",
+      "status": "pending",
+      "replacement": null
+    }
+  ]
+}
